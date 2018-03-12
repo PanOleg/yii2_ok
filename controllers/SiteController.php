@@ -5,9 +5,7 @@ namespace app\controllers;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
-use yii\web\Response;
 use yii\filters\VerbFilter;
-use yii\captcha\Captcha;
 use yii\captcha\CaptchaValidator;
 
 class SiteController extends Controller {
@@ -87,10 +85,17 @@ class SiteController extends Controller {
 	}
 
 	public function actionGetimagefromgiphy() {
+		$tag = 'dog';
 		$request = Yii::$app->request;
 		$validate = new CaptchaValidator();
-		$code = $validate->validate($request->post('captcha'));
 
-		return json_encode(['status' => $code]);
+		$code = $validate->validate($request->post('captcha'));
+		if ($code) {
+			$image = file_get_contents('http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=' . $tag);
+			return json_encode(['status' => true, 'image' => base64_encode($image)]);
+		} else {
+
+			return json_encode(['status' => false]);
+		}
 	}
 }
