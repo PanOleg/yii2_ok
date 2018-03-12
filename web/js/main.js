@@ -13,28 +13,42 @@ $(document).ready(function () {
                 result = JSON.parse(result);
                 if (result.status == true)
                 {
-                    q = "dog"; // search query
+                    result = JSON.parse(result);
+                    if (result.status == true)
+                    {
+                        $('#randImg').attr('src', 'data:image/png;base64,' + result.image);
+                        $('#randImg').show();
+                        $('#capcha').hide();
+                        $('#GetImageFromGiphy').hide();
+                    }
+                    else
+                    {
+                        $('#w0-image').click();
+                        $('#w0').val('');
+                    }
 
-                    request = new XMLHttpRequest;
-                    request.open('GET', 'http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=' + q, true);
-
-                    request.onload = function () {
-                        if (request.status >= 200 && request.status < 400) {
-                            data = JSON.parse(request.responseText).data.image_url;
-                            console.log(data);
-                            $('#randImg').html('<center><img src = "' + data + '"  title="GIF via Giphy"></center>').show();
-                        } else {
-                            console.log('Reached giphy, but API returned an error');
-                        }
-                    };
-
-                    request.onerror = function () {
-                        console.log('Connection error');
-                    };
-
-                    request.send();
-                    $('#capcha').hide();
-                    $('#GetImageFromGiphy').hide();
+                    // q = "dog"; // search query
+                    //
+                    // request = new XMLHttpRequest;
+                    // request.open('GET', 'http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=' + q, true);
+                    //
+                    // request.onload = function () {
+                    //     if (request.status >= 200 && request.status < 400) {
+                    //         data = JSON.parse(request.responseText).data.image_url;
+                    //         console.log(data);
+                    //         $('#randImg').html('<center><img src = "' + data + '"  title="GIF via Giphy"></center>').show();
+                    //     } else {
+                    //         console.log('Reached giphy, but API returned an error');
+                    //     }
+                    // };
+                    //
+                    // request.onerror = function () {
+                    //     console.log('Connection error');
+                    // };
+                    //
+                    // request.send();
+                    // $('#capcha').hide();
+                    // $('#GetImageFromGiphy').hide();
                 }
                 else
                 {
